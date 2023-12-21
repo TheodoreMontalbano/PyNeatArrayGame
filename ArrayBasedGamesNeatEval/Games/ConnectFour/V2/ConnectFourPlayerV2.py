@@ -7,34 +7,6 @@ from copy import deepcopy
 # This player takes in a Connect Four Game state then makes rates all possible next moves
 # and makes one
 class ConnectFourPlayerV2(ConnectFourPlayerV1):
-    _name: str = None
-    brain = None
-
-    # returns how much free the target pieces have around them
-    @staticmethod
-    def deg_of_freedom(target: int, state) -> float:
-        piece_count = 0
-        count = 0
-        # represents each side we need to check
-        deg_arr = [
-            [0, 7],
-            [0, -7],
-            [1, 7],
-            [1, -7],
-            [-1, -7],
-            [-1, 7],
-            [1, 0],
-            [-1, 0]
-        ]
-        for i in range(len(state)):
-            if state[i] == target:
-                piece_count = piece_count + 1
-                for j in deg_arr:
-                    if 0 <= j[0] + i + j[1] < 42:
-                        if state[j[0] + i + j[1]] == 0:
-                            count = count + 1
-        # Scale by 1/7, since each piece can only have seven free sides at most
-        return count / max(piece_count, 1) * 1 / 7
 
     # returns the average distance of my pieces from the center column
     @staticmethod
@@ -48,13 +20,23 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                     count = count + 1.0
         return sum_dist / count
 
+    @staticmethod
+    def get_height_counts(state) -> list[int]:
+        to_ret = [0 for i in range(7)]
+        for i in range(7):
+            while (i + 7 * to_ret[i] < 42 and
+                   not (state[i + 7 * to_ret[i]] == 0)):
+                to_ret[i] = to_ret[i] + 1
+        return to_ret
+
     # This function returns the maximum amount in a row
     # in a set that has a potential four in a row ability
     # that a row has
     @staticmethod
-    def in_a_row_count(target: int, state) -> float:
-        max_count = 0
-        max_duplicates = 0
+    def in_a_row_count(target: int, state, parity: int) -> list[int]:
+        height_counts = ConnectFourPlayerV2.get_height_counts(state)
+        in_a_row_count = [0 for _ in range(4)]
+
         # i is width, j is height
         for i in range(7):
             for j in range(6):
@@ -62,6 +44,8 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                 right_count = 0
                 up_diag_count = 0
                 low_diag_count = 0
+                if i == 1 and j == 0:
+                    a = 0
                 for k in range(4):
                     # Check up
                     if i + (j + k) * 7 < 42:
@@ -72,6 +56,11 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                             # we cannot get a four in a row on this set of four
                             # set to -10 as that is a number that will stay less
                             # than 0 regardless of increment
+                            up_count = -10
+                        elif not ((j + k - height_counts[i]) % 2 == parity):
+                            # Only count the set if we will naturally get the set
+                            # We naturally get the set if we are an even parity away
+                            # from it
                             up_count = -10
                     else:
                         up_count = 0
@@ -86,6 +75,11 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                             # set to -10 as that is a number that will stay less
                             # than 0 regardless of increment
                             right_count = -10
+                        elif not ((j - height_counts[i + k]) % 2 == parity):
+                            # Only count the set if we will naturally get the set
+                            # We naturally get the set if we are an even parity away
+                            # from it
+                            right_count = -10
                     else:
                         right_count = 0
 
@@ -99,11 +93,14 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                             # set to -10 as that is a number that will stay less
                             # than 0 regardless of increment
                             up_diag_count = -10
+                        elif not ((j + k - height_counts[i + k]) % 2 == parity):
+                            # Only count the set if we will naturally get the set
+                            # We naturally get the set if we are an even parity away
+                            # from it
+                            up_diag_count = -10
                     else:
                         up_diag_count = 0
 
-                    if i == 3 and j == 3:
-                        a = 0
                     # Check lower diagonal
                     if i + k < 7 and (j - k) >= 0:
                         if state[i + k + (j - k) * 7] == target:
@@ -114,15 +111,17 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
                             # set to -10 as that is a number that will stay less
                             # than 0 regardless of increment
                             low_diag_count = -10
+                        elif not ((j - k - height_counts[i + k]) % 2 == parity):
+                            # Only count the set if we will naturally get the set
+                            # We naturally get the set if we are an even parity away
+                            # from it
+                            low_diag_count = -10
                     else:
                         low_diag_count = 0
                 for k in [up_count, right_count, up_diag_count, low_diag_count]:
-                    if k > max_count:
-                        max_count = k
-                        max_duplicates = 0
-                    elif k == max_count > 1:
-                        max_duplicates = max_duplicates + 1
-        return max_count + max_duplicates / (max_duplicates + 1)
+                    if k > 0:
+                        in_a_row_count[k - 1] = in_a_row_count[k - 1] + 1
+        return in_a_row_count
 
     # Takes in the current state of a Tic Tac Toe Game and outputs
     # That state converted into a form easier for the AI to understand
@@ -130,19 +129,32 @@ class ConnectFourPlayerV2(ConnectFourPlayerV1):
     def convert_state(player_pos: int, state) -> list[float]:
         opp_pos = (player_pos % 2) + 1
 
+        # Computes the max in a row count present in the given array.
+        # Array is assumed to have a structure such that arr[i] is the
+        # amount of sets of size i + 1 "in a row" that are in the board
+        def compute_max_count(arr: list[int]) -> float:
+            max_count = 0
+            for i in range(len(arr)):
+                if not arr[i] == 0:
+                    max_count = (i + 1) * (arr[i] / (arr[i] + 1))
+            return max_count
+
+        player_max_count = compute_max_count(ConnectFourPlayerV2.in_a_row_count(player_pos, state, 1))
+
+        opp_max_count = compute_max_count(ConnectFourPlayerV2.in_a_row_count(opp_pos, state, 0))
+
+        dist_from_center = ConnectFourPlayerV2.avg_distance_from_center(player_pos, state)
+
         # 0 -> max number of my pieces in a set of 4 that do not include
-        #      an opponents piece
+        #      an opponents piece (normalized). The set of four must also
+        #      be an odd parity away
         # 1 -> same as 0, but opponents pieces and mine are switched
         # 2 -> 1 / (x + 1) where x is the avg distance of
         #      my pieces from center column
-        # 3 -> average amount of free spaces around my pieces
-        # 4 -> same as above for opponents
         feature_list = [
-            ConnectFourPlayerV2.in_a_row_count(player_pos, state) / 4,
-            ConnectFourPlayerV2.in_a_row_count(opp_pos, state) / 4,
-            1.0 / (1.0 + ConnectFourPlayerV2.avg_distance_from_center(player_pos, state)),
-            ConnectFourPlayerV2.deg_of_freedom(player_pos, state),
-            ConnectFourPlayerV2.deg_of_freedom(opp_pos, state)
+            player_max_count / 4,
+            opp_max_count / 4,
+            1.0 / (1.0 + dist_from_center)
         ]
         return feature_list
 

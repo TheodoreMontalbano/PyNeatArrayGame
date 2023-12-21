@@ -11,6 +11,8 @@ from ArrayBasedGamesNeatEval.Games.ConnectFour.ConnectFour import ConnectFour
 from ArrayBasedGamesNeatEval.Games.ConnectFour.V1.ConnectFourPlayerV1 import ConnectFourPlayerV1
 from ArrayBasedGamesNeatEval.Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
 from ArrayBasedGamesNeatEval.Games.ConnectFour.V3.ConnectFourPlayerV3 import ConnectFourPlayerV3
+from ArrayBasedGamesNeatEval.Games.ConnectFour.V4.ConnectFourPlayerV4 import ConnectFourPlayerV4
+
 
 from ArrayBasedGamesNeatEval.Evaluate import dummy_eval
 
@@ -44,7 +46,7 @@ def get_base_path(game: Games, version: int = -1):
             version_string)
     elif game == Games.ConnectFour:
         if version == -1:
-            version_string = "V3"
+            version_string = "V4"
         else:
             version_string = "V" + str(version)
         base_path = os.path.join(
@@ -110,7 +112,7 @@ def get_player_func(game: Games, version: int = -1):
 
     elif game == Games.ConnectFour:
         if version == -1:
-            return ConnectFourPlayerV3
+            return ConnectFourPlayerV4
         else:
             if version == 1:
                 return ConnectFourPlayerV1
@@ -118,6 +120,8 @@ def get_player_func(game: Games, version: int = -1):
                 return ConnectFourPlayerV2
             if version == 3:
                 return ConnectFourPlayerV3
+            if version == 4:
+                return ConnectFourPlayerV4
 
 
 # If the version is left unpopulated the latest version will be taken

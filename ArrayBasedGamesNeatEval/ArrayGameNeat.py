@@ -34,6 +34,7 @@ def run(config_file,
         "avg": True,
         "number of games check": False,
         "consistent games check": False,
+        "show best game": True,
         "show best": True
     }
     # Add a stdout reporter to show progress in the terminal.
@@ -51,12 +52,12 @@ def run(config_file,
         get_eval_func(
             create_game,
             create_player,
-            150,
+            20,
             debug,
             0,
             .5
         ),
-        100)
+        1000)
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
 
@@ -85,7 +86,7 @@ def main():
     # here so that the script will run successfully regardless of the
     # current working directory.
     config_path, save_path, create_game, create_player = (
-        GameFactory.get_game(Games.TicTacToe, 3))
+        GameFactory.get_game(Games.ConnectFour, 4))
 
     run(config_path, save_path, create_game, create_player, False)
 
