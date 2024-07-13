@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import random
-from ArrayBasedGamesNeatEval.Enums.GameState import GameState
-from ArrayBasedGamesNeatEval.Enums.InvalidMoveCases import InvalidMoveCases
-from ArrayBasedGamesNeatEval.GameInterfaces.IPlayer import IPlayer
-from ArrayBasedGamesNeatEval.GameInterfaces.IArrayGame import IArrayGame
+from Enums.GameState import GameState
+from Enums.InvalidMoveCases import InvalidMoveCases
+from GameInterfaces.IPlayer import IPlayer
+from GameInterfaces.IArrayGame import IArrayGame
 
 
 class TicTacToe(IArrayGame):

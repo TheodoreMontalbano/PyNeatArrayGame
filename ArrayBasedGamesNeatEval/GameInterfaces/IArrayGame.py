@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from ArrayBasedGamesNeatEval.GameInterfaces.IPlayer import IPlayer
+from GameInterfaces.IPlayer import IPlayer
 
 
 class IArrayGame:
     # Current state of the game
     state = None
-    players: IPlayer = None
+    players: list[IPlayer] = None
     curr_player: int = None
     move_num: int = None
     invalid_move_loss: bool = None

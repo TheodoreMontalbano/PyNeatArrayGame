@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V1.ConnectFourPlayerV1 import ConnectFourPlayerV1
+from Games.ConnectFour.V1.ConnectFourPlayerV1 import ConnectFourPlayerV1
 from copy import deepcopy
 
 

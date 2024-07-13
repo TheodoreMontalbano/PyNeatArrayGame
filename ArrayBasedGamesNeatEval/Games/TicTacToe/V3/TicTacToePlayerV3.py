@@ -1,4 +1,4 @@
-from ArrayBasedGamesNeatEval.Games.TicTacToe.V2.TicTacToePlayerV2 import TicTacToePlayerV2
+from Games.TicTacToe.V2.TicTacToePlayerV2 import TicTacToePlayerV2
 
 
 # This player takes in a TicTacToe Game state then rates each other possible

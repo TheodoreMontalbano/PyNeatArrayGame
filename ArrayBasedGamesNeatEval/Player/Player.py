@@ -1,4 +1,4 @@
-from ArrayBasedGamesNeatEval.GameInterfaces.IPlayer import IPlayer
+from GameInterfaces.IPlayer import IPlayer
 
 
 class Player(IPlayer):

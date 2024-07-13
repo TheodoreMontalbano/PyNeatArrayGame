@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import Callable
 
 import neat
-from ArrayBasedGamesNeatEval.Player.Player import Player
-from ArrayBasedGamesNeatEval.Enums.Games import Games
-from XORPractice import visualize
-from GameInterfaces.IArrayGame import IArrayGame, IPlayer
+from Player.Player import Player
+from Enums.Games import Games
+from GameInterfaces.IArrayGame import IArrayGame
+from GameInterfaces.IPlayer import IPlayer
 import GameFactory
 from Evaluate import get_eval_func
 
@@ -57,7 +57,7 @@ def run(config_file,
             0,
             .5
         ),
-        1000)
+        100)
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
 

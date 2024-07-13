@@ -1,4 +1,4 @@
-from ArrayBasedGamesNeatEval.Games.TicTacToe.V1.TicTacToePlayer import TicTacToePlayer
+from Games.TicTacToe.V1.TicTacToePlayer import TicTacToePlayer
 from copy import deepcopy
 
 

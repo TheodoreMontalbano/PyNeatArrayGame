@@ -1,6 +1,7 @@
 from IPlayer import IPlayer
 from IArrayGame import IArrayGame
 
+
 class INNPlayer(IPlayer):
     # The Name of this NN
     _name: str = None

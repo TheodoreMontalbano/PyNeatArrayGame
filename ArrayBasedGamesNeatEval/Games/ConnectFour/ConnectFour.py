@@ -1,8 +1,8 @@
-from ArrayBasedGamesNeatEval.GameInterfaces.IArrayGame import IArrayGame
+from GameInterfaces.IArrayGame import IArrayGame
 from copy import deepcopy
-from ArrayBasedGamesNeatEval.Enums.GameState import GameState
-from ArrayBasedGamesNeatEval.Enums.InvalidMoveCases import InvalidMoveCases
-from ArrayBasedGamesNeatEval.GameInterfaces.IPlayer import IPlayer
+from Enums.GameState import GameState
+from Enums.InvalidMoveCases import InvalidMoveCases
+from GameInterfaces.IPlayer import IPlayer
 import math
 
 

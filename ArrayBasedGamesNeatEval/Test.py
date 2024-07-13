@@ -1,7 +1,7 @@
 import neat
-from ArrayBasedGamesNeatEval import GameFactory
-from ArrayBasedGamesNeatEval.Player.Player import Player
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
+import GameFactory
+from Player.Player import Player
+from Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
 
 game = GameFactory.Games.ConnectFour
 version = 2

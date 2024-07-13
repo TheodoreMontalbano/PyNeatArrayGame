@@ -1,20 +1,20 @@
 import neat
 
-from ArrayBasedGamesNeatEval.Enums.Games import Games
+from Enums.Games import Games
 
-from ArrayBasedGamesNeatEval.Games.TicTacToe.TicTacToe import TicTacToe
-from ArrayBasedGamesNeatEval.Games.TicTacToe.V1.TicTacToePlayer import TicTacToePlayer
-from ArrayBasedGamesNeatEval.Games.TicTacToe.V2.TicTacToePlayerV2 import TicTacToePlayerV2
-from ArrayBasedGamesNeatEval.Games.TicTacToe.V3.TicTacToePlayerV3 import TicTacToePlayerV3
+from Games.TicTacToe.TicTacToe import TicTacToe
+from Games.TicTacToe.V1.TicTacToePlayer import TicTacToePlayer
+from Games.TicTacToe.V2.TicTacToePlayerV2 import TicTacToePlayerV2
+from Games.TicTacToe.V3.TicTacToePlayerV3 import TicTacToePlayerV3
 
-from ArrayBasedGamesNeatEval.Games.ConnectFour.ConnectFour import ConnectFour
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V1.ConnectFourPlayerV1 import ConnectFourPlayerV1
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V3.ConnectFourPlayerV3 import ConnectFourPlayerV3
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V4.ConnectFourPlayerV4 import ConnectFourPlayerV4
+from Games.ConnectFour.ConnectFour import ConnectFour
+from Games.ConnectFour.V1.ConnectFourPlayerV1 import ConnectFourPlayerV1
+from Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
+from Games.ConnectFour.V3.ConnectFourPlayerV3 import ConnectFourPlayerV3
+from Games.ConnectFour.V4.ConnectFourPlayerV4 import ConnectFourPlayerV4
 
 
-from ArrayBasedGamesNeatEval.Evaluate import dummy_eval
+from Evaluate import dummy_eval
 
 import os
 

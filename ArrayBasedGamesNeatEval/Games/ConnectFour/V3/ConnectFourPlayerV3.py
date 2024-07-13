@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ArrayBasedGamesNeatEval.Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
+from Games.ConnectFour.V2.ConnectFourPlayerV2 import ConnectFourPlayerV2
 
 
 # This player takes in a Connect Four Game state then makes rates all possible next moves

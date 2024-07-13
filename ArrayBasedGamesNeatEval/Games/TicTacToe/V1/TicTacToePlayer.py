@@ -1,4 +1,4 @@
-from ArrayBasedGamesNeatEval.GameInterfaces.IPlayer import IPlayer
+from GameInterfaces.IPlayer import IPlayer
 
 
 # This player takes in a TicTacToe Game state then makes an optimal move
